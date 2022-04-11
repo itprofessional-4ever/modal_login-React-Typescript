@@ -1,18 +1,30 @@
 import { useState } from 'react';
 import './App.css';
-import RWDModal from './ModalPopUp/RWDModal';
+import LoginModal, { LoginFunction } from './ModalPopUp/LoginModal';
 
 function App() {
 
-  const [isModalVisibla, setIsModalVisible] = useState<boolean>(false);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   const toggleModal = () => {
     setIsModalVisible(wasModalVisible => !wasModalVisible)
   }
+
+  const onBackdropClick = () => {
+    setIsModalVisible(false)
+  }
+
+  const onLoginRequest: LoginFunction = async ({password, login}) => {
+    console.log(password, login)
+  }
   return (
     <div className="App">
      <button onClick={toggleModal}>Show Modal</button>
-     <RWDModal header="Login" message='Please Login!' isModalVisible={isModalVisibla} onBackdropClick={toggleModal} />
+     <LoginModal
+      onBackdropClick={onBackdropClick} 
+      isModalVisible={!isModalVisible} 
+      onLoginRequested={onLoginRequest} 
+    />
     </div>
   );
 }
