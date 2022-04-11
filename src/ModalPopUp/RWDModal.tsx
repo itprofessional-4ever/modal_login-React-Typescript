@@ -1,7 +1,7 @@
 import React from 'react'
 import MediaQuery from 'react-responsive'
 import BaseModalWrapper, { BaseModalWrapperProps } from './BaseModalWrapper'
-import { DesktopCloseButton, DesktopModalContainer, MobileCloseButton, MobileModalContainer } from './ModalPopUpStyles';
+import { DesktopCloseButton, DesktopModalContainer, MobileCloseButton, MobileModalContainer } from './ModalPopup.styled'
 
 type RWDModalProps = BaseModalWrapperProps;
 

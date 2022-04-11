@@ -8,7 +8,7 @@ const InputWrapper = styled.div`
 
   input {
     display: block;
-    background: none;
+    background-color: white;
     border: none;
     &:focus {
       outline: none;

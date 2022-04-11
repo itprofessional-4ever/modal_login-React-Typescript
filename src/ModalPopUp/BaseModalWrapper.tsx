@@ -1,5 +1,5 @@
-import React, { Children, MouseEventHandler, ReactNode } from 'react'
-import { Header, Message, CloseSign } from './ModalPopUpStyles';
+import React, { MouseEventHandler, ReactNode } from 'react'
+import { Header, Message, CloseSign } from './ModalPopup.styled'
 import Modal from './Modal';
 
 export interface BaseModalWrapperProps {

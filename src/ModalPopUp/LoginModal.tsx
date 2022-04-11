@@ -1,10 +1,11 @@
-import React from 'react'
-import RWDModal from './RWDModal';
+import React, { useState } from 'react'
 import { ReactComponent as LoginIcon} from '../assets/user.svg'
 import { ReactComponent as PasswordIcon} from '../assets/padlock.svg'
 import InputWithIcon from './InputWithIcon';
+import ModalRWD from './ModalRWD';
+import { Button, ButtonContainer, Error } from './ModalPopup.styled';
 
-interface LoginArgs {
+export interface LoginArgs {
   password: string;
   login: string;
 }
@@ -12,34 +13,50 @@ interface LoginArgs {
 export type LoginFunction = (args: LoginArgs) => Promise<void>;
 
 interface LoginModalProps {
-  onBackdropClick: () => void;
+  onClose: () => void;
   isModalVisible: boolean;
   loginError?: string;
   onLoginRequested: LoginFunction;
 
 }
 
-const LoginModal: React.FC<LoginModalProps> = ({loginError,isModalVisible, onBackdropClick, onLoginRequested}) => {
+const LoginModal: React.FC<LoginModalProps> = ({loginError,isModalVisible, onClose, onLoginRequested}) => {
+  const [login, setLogin] = useState('')
+  const [password, setPassword] = useState('')
+
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if(e.key === 'Enter') {
+      onLoginRequested({login, password})
+    }
+  }
   return (
-    <RWDModal 
-      onBackdropClick={onBackdropClick}
+    <ModalRWD 
+      onBackdropClick={onClose}
       isModalVisible={isModalVisible}
       header="Login"
       message="Please log in"
       content={
         <>
-          <InputWithIcon 
+          <InputWithIcon
+          onKeyDown={onKeyDown}
+            value={login}
+            onChange={e => setLogin(e.target.value)}
             type="text" 
             icon={
               <LoginIcon width="24px" height="24px" fill="white" />
             } />
-          <InputWithIcon 
+          <InputWithIcon
+            onKeyDown={onKeyDown}
+            onChange={e => setPassword(e.target.value)}
             type="password" 
             icon={
               <PasswordIcon width="24px" height="24px" fill="white" />
             } />
-          <button>Cancel</button>
-          <button>Log in</button>
+            {loginError && <Error>{loginError}</Error>}
+            <ButtonContainer>
+              <Button onClick={onClose}>Cancel</Button>
+              <Button onClick={() => onLoginRequested({password, login})}>Log in</Button>
+            </ButtonContainer>
         </>
       }
     />
